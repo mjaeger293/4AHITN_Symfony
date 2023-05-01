@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+    <div>
+        <h1>{{ product.name }}</h1>
+        Artikelnummer: {{ product.articleNr }}
+        <div>
+            {{ product.description }}<br /><br />
+
+            <strong>{{ product.price }}</strong>
+            {% if product.stock is not null %}
+                {% if product.stock > 0 %}
+                    Derzeit {{ product.stock }} auf Lager<br />
+                    <label for="amount">Anzahl:</label>
+                    <form action="{{ path('add_to_cart', {productId: product.id}) }}" method="post">
+                        <input type="number" min="1" max="{{ product.stock }}" value="1" name="amount" id="amount" />
+                        <input type="submit" value="In den Warenkorb" />
+                    </form>
+                {% else %}
+                    Artikel derzeit ausverkauft!
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
